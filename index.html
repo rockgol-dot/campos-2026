@@ -9,19 +9,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --bg:#f3f5f2; --surface:#ffffff; --line:#dde3dc; --fg:#1d2a24; --muted:#5f6e66;
-  --pine:#2f5d4a; --pine-soft:#e3eee8; --wood:#9a5b2e; --wood-soft:#f6ebe1;
-  --rain:#3f6f9a; --rain-soft:#e4edf6; --cold:#5a6fa8;
-  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif;
+--bg:#f3f5f2; --surface:#ffffff; --line:#dde3dc; --fg:#1d2a24; --muted:#5f6e66;
+--pine:#2f5d4a; --pine-soft:#e3eee8; --wood:#9a5b2e; --wood-soft:#f6ebe1;
+--rain:#3f6f9a; --rain-soft:#e4edf6; --cold:#5a6fa8;
+--display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
-  --pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
-  --rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}}
+--bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
+--pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
+--rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
-  --pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
-  --rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}
+--bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
+--pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
+--rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:760px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0;color:var(--pine);text-wrap:balance}
@@ -39,8 +39,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
 .badge b{display:block;font-family:var(--display);font-weight:400;font-size:20px}
 .day-title{min-width:0}
 .date{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.name{font-family:var(--display);font-size:20px;line-height:1.2}
-.wx{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:13px;font-variant-numeric:tabular-nums}
+.name{font-family:var(--display);font-size:20px;line-height:1.2}.wx{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:13px;font-variant-numeric:tabular-nums}
 .wx .t{font-weight:600}
 .pill{border-radius:999px;padding:1px 8px;font-size:12px;font-weight:600}
 .pill.rain{background:var(--rain-soft);color:var(--rain)}
@@ -57,4 +56,181 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
 .ttl{font-weight:600}
 .desc{color:var(--muted);font-size:14px}
 .tip{margin:0 18px 16px;background:var(--wood-soft);color:var(--fg);border-radius:10px;padding:10px 12px;font-size:14px}
-.tip str
+.tip strong{color:var(--wood)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h2{font-family:var(--display);font-weight:400;font-size:20px;margin:0 0 12px}
+.kv{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:8px 16px;margin:0}
+.kv dt{color:var(--muted);font-size:13px}
+.kv dd{margin:0;min-width:0}
+.copy{margin-left:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:6px;font:500 12px var(--body);padding:2px 8px;cursor:pointer}
+.tips{display:grid;gap:14px}
+.tips h3{margin:0 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--wood)}
+.tips p{margin:0}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.checks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checks input{margin-top:3px;accent-color:var(--pine)}
+.checks input:checked + span{color:var(--muted);text-decoration:line-through}
+.foot{color:var(--muted);font-size:13px;margin-top:20px}
+.intro{margin:0;color:var(--muted)}
+.attrs{list-style:none;margin:0;padding:0;display:grid}
+.attrs li{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:10px 0;border-top:1px solid var(--line)}
+.attrs li:first-child{border-top:0;padding-top:0}
+.attrs .an{font-weight:600;min-width:0}
+.attrs .ad{grid-column:1/-1;color:var(--muted);font-size:14px}
+.tag{align-self:start;font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.tag.free{background:var(--pine-soft);color:var(--pine)}
+.tag.paid{background:var(--wood-soft);color:var(--wood)}
+@media (max-width:480px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Campos do Jordão</h1>
+<p class="sub">06 a 08 de novembro · chegada sexta de manhã, volta domingo à noite</p>
+<div class="chips">
+<span class="chip">🏔️ Sex a Dom</span>
+<span class="chip">🏠 Condomínio Strasburgo</span>
+<span class="chip">🚗 Carro, saída 6h</span>
+<span class="chip">👥 3 pessoas</span>
+</div><div class="tabs" role="tablist">
+<button class="tab" role="tab" id="t-roteiro" aria-selected="true" data-tab="roteiro">📅 Roteiro</button>
+<button class="tab" role="tab" id="t-hosp" aria-selected="false" data-tab="hosp">📍 Hospedagem</button>
+<button class="tab" role="tab" id="t-dicas" aria-selected="false" data-tab="dicas">💡 Dicas</button>
+<button class="tab" role="tab" id="t-atr" aria-selected="false" data-tab="atr">🗺️ Atrações</button>
+</div>
+<div id="roteiro" class="section" role="tabpanel">
+<article class="day">
+<div class="day-head">
+<div class="badge">Sex<b>D1</b></div>
+<div class="day-title">
+<div class="date">Sexta · 06/11</div>
+<div class="name">Chegada, Ducha, Itapeva e Capivari ✅</div>
+<div class="wx"><span>🌦</span><span class="t">18° a 25°</span><span class="pill rain">60% chuva</span></div>
+</div>
+</div>
+<ol class="timeline">
+<li class="tl"><div class="time">Manhã</div><div class="ttl">Chegada e Ducha de Prata</div><div class="desc">Trilhas, pontes de madeira e quedas d'água.</div></li>
+<li class="tl"><div class="time">Manhã</div><div class="ttl">Pico do Itapeva</div><div class="desc">Vista a mais de 2.000 m.</div></li>
+<li class="tl food"><div class="time">Almoço</div><div class="ttl">Check-in e almoço no SP50</div><div class="desc">No centrinho do Capivari.</div></li>
+<li class="tl"><div class="time">Tarde</div><div class="ttl">Parque Capivari</div><div class="desc">Trenó e teleférico fechados por risco de raios na região.</div></li>
+<li class="tl"><div class="time">Noite</div><div class="ttl">Festival de luzes no Parque Capivari</div><div class="desc">Passeio pela Vila e comprinhas.</div></li>
+<li class="tl food"><div class="time">Jantar</div><div class="ttl">Cantinho da Serra</div><div class="desc">Na Vila Capivari. Depois, passada de carro na farmácia.</div></li>
+</ol>
+<div class="tip"><strong>Ficou pendente:</strong> teleférico e trenó foram para sábado de manhã.</div>
+</article>
+<article class="day">
+<div class="day-head">
+<div class="badge">Sáb<b>D2</b></div>
+<div class="day-title">
+<div class="date">Sábado · 07/11</div>
+<div class="name">Dia coberto e Natal no Capivari</div>
+<div class="wx"><span>🌧</span><span class="t">16° a 26°</span><span class="pill rain">75% chuva</span></div>
+</div>
+</div>
+<ol class="timeline">
+<li class="tl food"><div class="time">09:30</div><div class="ttl">Café da manhã sem pressa</div></li>
+<li class="tl"><div class="time">10:15</div><div class="ttl">Teleférico até o Morro do Elefante, descida de trenó</div><div class="desc">Saindo do Parque Capivari. Pode fechar com chuva ou raios; se estiver fechado, adiante as lojinhas.</div></li>
+<li class="tl food"><div class="time">12:00</div><div class="ttl">Almoço nas lojinhas do Parque Capivari</div></li>
+<li class="tl"><div class="time">14:00</div><div class="ttl">Cervejaria Baden Baden ✅</div><div class="desc">Tour Degustação, 3 ingressos comprados. Av. Matheus da Costa Pinto, 1653. Chegue às 13h45: não entra depois do horário. Leve os ingressos impressos e documento com foto.</div></li>
+<li class="tl"><div class="time">15:30</div><div class="ttl">Vila Capivari por dentro</div><div class="desc">Chocolaterias, cafés e lojinhas de artesanato.</div></li><li class="tl tbc"><div class="time">17:00 · talvez</div><div class="ttl">Casa do Papai Noel e árvore de 20 m</div><div class="desc">Decoração de Natal no Capivari, tema "Fábrica de Biscoitos".</div></li>
+<li class="tl food"><div class="time">19:30</div><div class="ttl">Rodízio de fondue no Krokodillo</div><div class="desc">Plano provável.</div></li>
+</ol>
+<div class="tip"><strong>Reserve:</strong> o jantar de sábado à noite lota.</div>
+</article>
+<article class="day">
+<div class="day-head">
+<div class="badge">Dom<b>D3</b></div>
+<div class="day-title">
+<div class="date">Domingo · 08/11</div>
+<div class="name">Jardins, Palácio e volta</div>
+<div class="wx"><span>🧥</span><span class="t">10° a 15°</span><span class="pill cold">30% chuva · frio</span></div>
+</div>
+</div>
+<ol class="timeline">
+<li class="tl"><div class="time">09:00</div><div class="ttl">Check-out</div><div class="desc">Até as 11h. Saia já com as malas no carro.</div></li>
+<li class="tl"><div class="time">09:30</div><div class="ttl">Parque Amantikir</div><div class="desc">Mais de 25 jardins temáticos. Cerca de 2h30.</div></li>
+<li class="tl food"><div class="time">12:45</div><div class="ttl">Almoço</div></li>
+<li class="tl"><div class="time">14:00</div><div class="ttl">Centrinho e lembrancinhas</div><div class="desc">Chocolate, malhas e artesanato, com a decoração de Natal.</div></li>
+<li class="tl"><div class="time">15:00</div><div class="ttl">Palácio Boa Vista</div><div class="desc">Visita guiada gratuita até 17h, com senhas. Bolsas e celulares ficam no guarda-volumes.</div></li>
+<li class="tl food"><div class="time">19:30</div><div class="ttl">Jantar e volta para casa</div><div class="desc">Saia depois das 20h para pegar menos trânsito.</div></li>
+</ol>
+<div class="tip"><strong>Plano B se chover:</strong> troque o Amantikir por mais tempo no Centrinho e nos cafés. O Palácio pode suspender visitas com chuva.</div>
+</article>
+</div>
+<div id="hosp" class="section" role="tabpanel" hidden>
+<section class="card">
+<h2>Condomínio Strasburgo</h2>
+<dl class="kv">
+<dt>Endereço</dt><dd>Av. Vitor Godinho, 333, Vila Capivari<br><span class="desc">Mesma rua da portaria do Hotel Sagres</span></dd>
+<dt>Apartamento</dt><dd>25, segundo andar (escada ou elevador)</dd>
+<dt>Campainha</dt><dd>No segundo portão</dd>
+<dt>Quem recebe</dt><dd>Zelador Sr. Roberto</dd>
+<dt>Check-in</dt><dd>Sexta, liberado a partir das 12h</dd>
+<dt>Check-out</dt><dd>Domingo, até as 11h</dd>
+<dt>Carro</dt><dd>1 vaga no condomínio</dd>
+<dt>Wi-Fi</dt><dd>Rede <b>HUGO</b> · senha <b id="wifi">hugo1234</b><button class="copy" data-copy="hugo1234">Copiar</button></dd>
+<dt>Anfitrião</dt><dd>Hugo Shiromoto · <span id="tel">(12) 99111-0081</span><button class="copy" data-copy="12991110081">Copiar</button></dd>
+<dt>Regras</dt><dd>Máximo 4 pessoas, sem visitantes, sem pets</dd>
+</dl>
+</section>
+</div>
+<div id="dicas" class="section" role="tabpanel" hidden>
+<section class="card">
+<h2>Dicas do anfitrião</h2>
+<div class="tips">
+<div><h3>Almoço</h3><p>Mercearia Campos, Maná, Panela de Ferro e Lá Galia (no Capivari); Bonanza Grill; Nonna Mimi; Dona Chica e Bonanza Parrilla (no Horto Florestal); Parque da Cerveja / Mirante de Vidro.</p></div><div><h3>Café da tarde</h3><p>Myriam Café e The Waffle King (no Capivari); Sans Souci; Alta Vista.</p></div>
+<div><h3>Jantar</h3><p>Fondue no Krokodillo ou no Avestruz; pizza no Café Terraço ou no Arte da Pizza; Bella Vista; Pontremolli.</p></div>
+<div><h3>Se sobrar tempo</h3><p>Fábrica de chocolate Araucária, Parque da Lagoinha, Prana Park, Vinícola Santa Maria, OLIQ (azeite), Museu Felícia Leirner.</p></div>
+</div>
+</section>
+</div>
+<div id="atr" class="section" role="tabpanel" hidden>
+<p class="intro">Opções para trocar o roteiro na hora. Horários podem mudar; confirme antes de ir.</p>
+<section class="card">
+<h2>🌧 Cobertos, bons para chuva</h2>
+<ul class="attrs">
+<li><span class="an">Vila Capivari (Centrinho)</span><span class="tag free">Grátis</span><span class="ad">Chocolaterias, cafés, lojas e decoração de Natal. Ao lado do apartamento.</span></li>
+<li><span class="an">Cervejaria Baden Baden</span><span class="tag paid">Pago</span><span class="ad">Tour e degustação, só maiores de 18. Sex a dom, 10h–19h.</span></li>
+<li><span class="an">Palácio Boa Vista</span><span class="tag free">Grátis</span><span class="ad">Residência do governador com acervo de arte. Qua a dom, 10h–12h e 14h–17h.</span></li>
+<li><span class="an">Fábrica Spinassi</span><span class="tag free">Grátis</span><span class="ad">Visita à fábrica com degustação. Domingo só até 14h.</span></li>
+<li><span class="an">Fábrica Araucária</span><span class="tag free">Grátis</span><span class="ad">Produção vista por vidro e loja.</span></li>
+<li><span class="an">Casa do Papai Noel e árvore de Natal</span><span class="tag free">Grátis</span><span class="ad">Decoração de Natal no Capivari.</span></li>
+<li><span class="an">Bondinho (trem)</span><span class="tag paid">Pago</span><span class="ad">Passeio de cerca de 50 min pela cidade, 10h–17h.</span></li>
+<li><span class="an">Casa da Xilogravura</span><span class="tag paid">Pago</span><span class="ad">Museu de gravuras, perto do Capivari.</span></li>
+</ul>
+</section>
+<section class="card">
+<h2>☀️ Ao ar livre</h2>
+<ul class="attrs">
+<li><span class="an">Pico do Itapeva</span><span class="tag free">Grátis</span><span class="ad">Mirante a mais de 2.000 m. Melhor cedo, com céu limpo.</span></li>
+<li><span class="an">Morro do Elefante</span><span class="tag paid">Teleférico pago</span><span class="ad">Mirante com teleférico saindo do Parque Capivari. Pode fechar com chuva.</span></li>
+<li><span class="an">Parque Capivari</span><span class="tag free">Entrada grátis</span><span class="ad">Roda-gigante, pedalinhos e trenó (pagos à parte). Até 21h–22h.</span></li>
+<li><span class="an">Parque Amantikir</span><span class="tag paid">Pago</span><span class="ad">Mais de 25 jardins temáticos. Cerca de 2h.</span></li>
+<li><span class="an">Ducha de Prata</span><span class="tag free">Grátis</span><span class="ad">Quedas d'água e pontes de madeira. Seg e qua a sáb, 9h–16h.</span></li>
+<li><span class="an">Parque Tarundu</span><span class="tag paid">Pago</span><span class="ad">Tirolesa, boia-cross e cavalo, com algumas atividades cobertas. 9h–17h.</span></li><li><span class="an">Horto Florestal</span><span class="tag paid">Pago</span><span class="ad">Trilhas, arvorismo e pedalinho. Restaurantes Dona Chica e Bonanza Parrilla lá dentro.</span></li>
+<li><span class="an">Museu Felícia Leirner</span><span class="tag paid">Pago</span><span class="ad">Esculturas ao ar livre com vista para a Pedra do Baú. Perto do Palácio.</span></li>
+<li><span class="an">Parque da Cerveja / Mirante de Vidro</span><span class="tag paid">Pago</span><span class="ad">Mirante e cervejaria, bom para almoço.</span></li>
+<li><span class="an">Parque da Lagoinha</span><span class="tag paid">Pago</span><span class="ad">Lago e área verde, indicado para a manhã.</span></li>
+<li><span class="an">Prana Park</span><span class="tag paid">Pago</span><span class="ad">Parque com mirante e pôr do sol com vista para a Pedra do Baú.</span></li>
+<li><span class="an">Vinícola Santa Maria</span><span class="tag paid">Pago</span><span class="ad">Visita e degustação de vinhos.</span></li>
+<li><span class="an">Pedra do Baú</span><span class="tag free">Grátis</span><span class="ad">Mirante e trilhas em São Bento do Sapucaí. Bate-volta de carro.</span></li>
+</ul>
+</section>
+</div>
+<p class="foot">Previsão consultada em 05/11. Horários são estimativas; confirme funcionamento de cada atração.</p>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+function show(id){tabs.forEach(t=>{const on=t.dataset.tab===id;t.setAttribute('aria-selected',on);document.getElementById(t.dataset.tab).hidden=!on});
+try{localStorage.setItem('cj-tab',id)}catch(e){}}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
+try{const s=localStorage.getItem('cj-tab');if(s&&document.getElementById(s))show(s)}catch(e){}
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{
+const txt=b.dataset.copy;
+const done=()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar',1500)};
+if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done).catch(()=>{})}
+}));
+</script>
+</body>
+</html>

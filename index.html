@@ -101,6 +101,15 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
 .lb-btn{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:26px;cursor:pointer;line-height:1}
 .lb-close{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));font-size:20px}
 @media (max-width:480px){.lb-btn.nav{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px))}.lb-prev{left:24px}.lb-next{right:24px}}
+.cost-group{display:grid;gap:4px}
+.cost-group h3{margin:6px 0 2px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--wood)}
+.cost-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.cost-row:first-of-type{border-top:0}
+.cost-row .cd{min-width:0}
+.cost-row .cn{color:var(--muted);font-size:13px}
+.cost-row .cv{white-space:nowrap;font-weight:600}
+.cost-sub{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;padding-top:4px;font-variant-numeric:tabular-nums}
+.cost-total{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--display);font-size:22px;color:var(--pine);font-variant-numeric:tabular-nums}
 @media (max-width:480px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -123,6 +132,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
     <button class="tab" role="tab" id="t-dicas" aria-selected="false" data-tab="dicas">💡 Dicas</button>
     <button class="tab" role="tab" id="t-atr" aria-selected="false" data-tab="atr">🗺️ Atrações</button>
     <button class="tab" role="tab" id="t-fotos" aria-selected="false" data-tab="fotos">📸 Fotos</button>
+    <button class="tab" role="tab" id="t-custos" aria-selected="false" data-tab="custos">💰 Custos</button>
   </div>
 
   <div id="roteiro" class="section" role="tabpanel">
@@ -161,7 +171,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
         <li class="tl"><div class="time">13:00</div><div class="ttl">Vila Capivari por dentro</div><div class="desc">Chocolaterias, cafés e lojinhas de artesanato.</div></li>
         <li class="tl"><div class="time">14:00</div><div class="ttl">Cervejaria Baden Baden ✅</div><div class="desc">Tour Degustação, 3 ingressos comprados. Av. Matheus da Costa Pinto, 1653. Chegue às 13h45: não entra depois do horário. Leve os ingressos impressos e documento com foto.</div></li>
         <li class="tl"><div class="time">Tarde</div><div class="ttl">Chocolate Araucária, loja e fábrica</div><div class="desc">Visita à fábrica de chocolate com o museu.</div></li>
-        <li class="tl food"><div class="time">19:30</div><div class="ttl">Rodízio de fondue no Restaurante Avestruz</div><div class="desc">Cerca de R$ 150 por pessoa.</div></li>
+        <li class="tl food"><div class="time">19:30</div><div class="ttl">Rodízio de fondue no Restaurante Avestruz</div><div class="desc">R$ 483,20 para os 3.</div></li>
       </ol>
     </article>
 
@@ -253,6 +263,12 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
     <div id="gal-root" class="section"></div>
   </div>
 
+  <div id="custos" class="section" role="tabpanel" hidden>
+    <section class="card"><div class="cost-total"><span>Total estimado</span><span id="cost-total"></span></div></section>
+    <section class="card" id="cost-root"></section>
+    <p class="intro">Total estimado. Não inclui gastos individuais das meninas, e o café da Giovanna no domingo é estimado.</p>
+  </div>
+
   <p class="foot">Previsão consultada em 05/11. Horários são estimativas; confirme funcionamento de cada atração.</p>
 </div>
 
@@ -319,6 +335,55 @@ document.addEventListener('keydown',e=>{if(lbEl.hidden)return;if(e.key==='Escape
 let tx=null;lbEl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
 lbEl.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)lbNav(dx<0?1:-1);tx=null;});
 renderGallery();
+
+// Custos da viagem
+const COSTS=[
+  {cat:'Hospedagem',items:[
+    {d:'Airbnb no Condomínio Strasburgo',n:'2 noites',v:1440.00}
+  ]},
+  {cat:'Transporte',items:[
+    {d:'Pedágios na ida',n:'4 praças: 6,10 + 5,70 + 5,70 + 5,80',v:23.30},
+    {d:'Pedágios na volta',n:'4 praças: 6,10 + 5,70 + 5,70 + 5,80',v:23.30},
+    {d:'Combustível na ida',n:'Tanque cheio',v:147.43},
+    {d:'Combustível na volta',n:'Completado para voltar',v:150.01}
+  ]},
+  {cat:'Sexta · 06/11',items:[
+    {d:'Banheiro',n:'Vale pelo meme',v:2.50},
+    {d:'Almoço no SP50',v:183.44},
+    {d:'Divino Vinho',v:28.00},
+    {d:'Farmácia',n:'Itens que esquecemos de trazer',v:92.50},
+    {d:'Jantar no Cantinho da Serra',n:'R$ 101,90 por pessoa × 3',v:305.70},
+    {d:'Relógio de lembrancinha',v:90.00}
+  ]},
+  {cat:'Sábado · 07/11',items:[
+    {d:'Café da manhã no Myriam Café',n:'R$ 28 + R$ 31 + R$ 31',v:90.00},
+    {d:'Teleférico do Morro do Elefante',n:'Ingressos',v:255.00},
+    {d:'2 chopps no Morro do Elefante',v:20.00},
+    {d:'Almoço de crepes',v:128.00},
+    {d:'Strudel',v:53.40},
+    {d:'Água',v:5.00},
+    {d:'Capinha de celular',v:35.00},
+    {d:'Chocolate Araucária',n:'R$ 26,28 + R$ 24,20',v:50.48},
+    {d:'Cervejaria Baden Baden',n:'3 ingressos do Tour Degustação (R$ 90 + R$ 4,50 de taxa cada)',v:283.50},
+    {d:'Rodízio de fondue no Avestruz',n:'3 pessoas',v:483.20}
+  ]},
+  {cat:'Domingo · 08/11',items:[
+    {d:'Farmácia',v:30.86},
+    {d:'Café da manhã da Fernanda',v:31.10},
+    {d:'Café da manhã da Giovanna',n:'Estimado igual ao da Fernanda',v:31.10},
+    {d:'Chocolates de lembrancinha',v:59.00}
+  ]}
+];
+const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function renderCosts(){
+  let total=0;
+  document.getElementById('cost-root').innerHTML=COSTS.map(g=>{
+    const sub=g.items.reduce((a,i)=>a+i.v,0); total+=sub;
+    return `<div class="cost-group"><h3>${g.cat}</h3>${g.items.map(i=>`<div class="cost-row"><div class="cd">${i.d}${i.n?`<div class="cn">${i.n}</div>`:''}</div><div class="cv">${brl(i.v)}</div></div>`).join('')}<div class="cost-sub"><span>Subtotal</span><span>${brl(sub)}</span></div></div>`;
+  }).join('');
+  document.getElementById('cost-total').textContent=brl(total);
+}
+renderCosts();
 </script>
 
 </body>

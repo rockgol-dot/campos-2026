@@ -8,20 +8,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
 <style>
+/* Layout: cabeçalho com chips, abas, cartões de dia com linha do tempo vertical (estilo do roteiro de Maceió) */
 :root{
---bg:#f3f5f2; --surface:#ffffff; --line:#dde3dc; --fg:#1d2a24; --muted:#5f6e66;
---pine:#2f5d4a; --pine-soft:#e3eee8; --wood:#9a5b2e; --wood-soft:#f6ebe1;
---rain:#3f6f9a; --rain-soft:#e4edf6; --cold:#5a6fa8;
---display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif;
+  --bg:#f3f5f2; --surface:#ffffff; --line:#dde3dc; --fg:#1d2a24; --muted:#5f6e66;
+  --pine:#2f5d4a; --pine-soft:#e3eee8; --wood:#9a5b2e; --wood-soft:#f6ebe1;
+  --rain:#3f6f9a; --rain-soft:#e4edf6; --cold:#5a6fa8;
+  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
---bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
---pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
---rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}}
+  --bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
+  --pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
+  --rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}}
 :root[data-theme="dark"]{
---bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
---pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
---rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}
+  --bg:#111814; --surface:#18221d; --line:#2a3630; --fg:#e6ece8; --muted:#9aaaa1;
+  --pine:#7fc0a2; --pine-soft:#1f3329; --wood:#e0a370; --wood-soft:#33261b;
+  --rain:#8db7df; --rain-soft:#1b2a38; --cold:#a3b3e0; color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:760px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0;color:var(--pine);text-wrap:balance}
@@ -39,7 +40,8 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
 .badge b{display:block;font-family:var(--display);font-weight:400;font-size:20px}
 .day-title{min-width:0}
 .date{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.name{font-family:var(--display);font-size:20px;line-height:1.2}.wx{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:13px;font-variant-numeric:tabular-nums}
+.name{font-family:var(--display);font-size:20px;line-height:1.2}
+.wx{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:13px;font-variant-numeric:tabular-nums}
 .wx .t{font-weight:600}
 .pill{border-radius:999px;padding:1px 8px;font-size:12px;font-weight:600}
 .pill.rain{background:var(--rain-soft);color:var(--rain)}
@@ -80,157 +82,244 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,6vw,40px);lin
 .tag{align-self:start;font-size:12px;font-weight:600;border-radius:999px;padding:1px 8px;white-space:nowrap}
 .tag.free{background:var(--pine-soft);color:var(--pine)}
 .tag.paid{background:var(--wood-soft);color:var(--wood)}
+.gal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.gal-day{display:grid;gap:10px}
+.gal-day h2{margin:0}
+.gal-count{color:var(--muted);font-size:13px}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}
+.gal-thumb{position:relative;aspect-ratio:1;max-width:100%;border:0;padding:0;border-radius:8px;overflow:hidden;background:var(--line);cursor:pointer}
+.gal-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-thumb:focus-visible{outline:2px solid var(--pine);outline-offset:2px}
+.gal-play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.25)}
+.gal-play span{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);color:#111;display:grid;place-items:center;font-size:13px;padding-left:2px}
+.gal-empty{color:var(--muted);font-size:14px;margin:0}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,14,12,.94);display:flex;align-items:center;justify-content:center;gap:10px;padding:calc(16px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.lb-stage{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;flex:1}
+.lb-stage img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px}
+.lb-stage iframe{width:min(100%,900px);height:min(75vh,520px);border:0;border-radius:8px;background:#000}
+.lb-count{color:rgba(255,255,255,.6);font-size:12px}
+.lb-btn{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:26px;cursor:pointer;line-height:1}
+.lb-close{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px));font-size:20px}
+@media (max-width:480px){.lb-btn.nav{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px))}.lb-prev{left:24px}.lb-next{right:24px}}
 @media (max-width:480px){.kv{grid-template-columns:1fr}.kv dt{margin-top:6px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+
 <div class="wrap">
-<h1>Campos do Jordão</h1>
-<p class="sub">06 a 08 de novembro · chegada sexta de manhã, volta domingo à noite</p>
-<div class="chips">
-<span class="chip">🏔️ Sex a Dom</span>
-<span class="chip">🏠 Condomínio Strasburgo</span>
-<span class="chip">🚗 Carro, saída 6h</span>
-<span class="chip">👥 3 pessoas</span>
-</div><div class="tabs" role="tablist">
-<button class="tab" role="tab" id="t-roteiro" aria-selected="true" data-tab="roteiro">📅 Roteiro</button>
-<button class="tab" role="tab" id="t-hosp" aria-selected="false" data-tab="hosp">📍 Hospedagem</button>
-<button class="tab" role="tab" id="t-dicas" aria-selected="false" data-tab="dicas">💡 Dicas</button>
-<button class="tab" role="tab" id="t-atr" aria-selected="false" data-tab="atr">🗺️ Atrações</button>
+  <h1>Campos do Jordão</h1>
+  <p class="sub">06 a 08 de novembro · chegada sexta de manhã, volta domingo à noite</p>
+  <div class="chips">
+    <span class="chip">🏔️ Sex a Dom</span>
+    <span class="chip">🏠 Condomínio Strasburgo</span>
+    <span class="chip">🚗 Carro, saída 6h</span>
+    <span class="chip">👥 3 pessoas</span>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="t-roteiro" aria-selected="true" data-tab="roteiro">📅 Roteiro</button>
+    <button class="tab" role="tab" id="t-hosp" aria-selected="false" data-tab="hosp">📍 Hospedagem</button>
+    <button class="tab" role="tab" id="t-dicas" aria-selected="false" data-tab="dicas">💡 Dicas</button>
+    <button class="tab" role="tab" id="t-atr" aria-selected="false" data-tab="atr">🗺️ Atrações</button>
+    <button class="tab" role="tab" id="t-fotos" aria-selected="false" data-tab="fotos">📸 Fotos</button>
+  </div>
+
+  <div id="roteiro" class="section" role="tabpanel">
+    <article class="day">
+      <div class="day-head">
+        <div class="badge">Sex<b>D1</b></div>
+        <div class="day-title">
+          <div class="date">Sexta · 06/11</div>
+          <div class="name">Chegada, Ducha, Itapeva e Capivari ✅</div>
+          <div class="wx"><span>🌦</span><span class="t">18° a 25°</span><span class="pill rain">60% chuva</span></div>
+        </div>
+      </div>
+      <ol class="timeline">
+        <li class="tl"><div class="time">Manhã</div><div class="ttl">Chegada e Ducha de Prata</div><div class="desc">Trilhas, pontes de madeira e quedas d'água.</div></li>
+        <li class="tl"><div class="time">Manhã</div><div class="ttl">Pico do Itapeva</div><div class="desc">Vista a mais de 2.000 m.</div></li>
+        <li class="tl food"><div class="time">Almoço</div><div class="ttl">Check-in e almoço no SP50</div><div class="desc">No centrinho do Capivari.</div></li>
+        <li class="tl"><div class="time">Tarde</div><div class="ttl">Parque Capivari</div><div class="desc">Trenó e teleférico fechados por risco de raios na região.</div></li>
+        <li class="tl"><div class="time">Noite</div><div class="ttl">Festival de luzes no Parque Capivari</div><div class="desc">Passeio pela Vila e comprinhas.</div></li>
+        <li class="tl food"><div class="time">Jantar</div><div class="ttl">Cantinho da Serra</div><div class="desc">Na Vila Capivari. Depois, passada de carro na farmácia.</div></li>
+      </ol>
+    </article>
+
+    <article class="day">
+      <div class="day-head">
+        <div class="badge">Sáb<b>D2</b></div>
+        <div class="day-title">
+          <div class="date">Sábado · 07/11</div>
+          <div class="name">Morro do Elefante, Baden Baden e chocolate</div>
+          <div class="wx"><span>🌧</span><span class="t">16° a 26°</span><span class="pill rain">75% chuva</span></div>
+        </div>
+      </div>
+      <ol class="timeline">
+        <li class="tl food"><div class="time">09:30</div><div class="ttl">Café da manhã sem pressa</div></li>
+        <li class="tl"><div class="time">10:15</div><div class="ttl">Teleférico até o Morro do Elefante, descida de trenó</div><div class="desc">Saindo do Parque Capivari. Pode fechar com chuva ou raios; se estiver fechado, adiante as lojinhas.</div></li>
+        <li class="tl food"><div class="time">12:00</div><div class="ttl">Almoço nas lojinhas do Parque Capivari</div></li>
+        <li class="tl"><div class="time">13:00</div><div class="ttl">Vila Capivari por dentro</div><div class="desc">Chocolaterias, cafés e lojinhas de artesanato.</div></li>
+        <li class="tl"><div class="time">14:00</div><div class="ttl">Cervejaria Baden Baden ✅</div><div class="desc">Tour Degustação, 3 ingressos comprados. Av. Matheus da Costa Pinto, 1653. Chegue às 13h45: não entra depois do horário. Leve os ingressos impressos e documento com foto.</div></li>
+        <li class="tl"><div class="time">Tarde</div><div class="ttl">Chocolate Araucária, loja e fábrica</div><div class="desc">Visita à fábrica de chocolate com o museu.</div></li>
+        <li class="tl food"><div class="time">19:30</div><div class="ttl">Rodízio de fondue no Restaurante Avestruz</div><div class="desc">Cerca de R$ 150 por pessoa.</div></li>
+      </ol>
+    </article>
+
+    <article class="day">
+      <div class="day-head">
+        <div class="badge">Dom<b>D3</b></div>
+        <div class="day-title">
+          <div class="date">Domingo · 08/11</div>
+          <div class="name">Volta antecipada</div>
+          <div class="wx"><span>🌧</span><span class="t">10° a 15°</span><span class="pill rain">chuva</span></div>
+        </div>
+      </div>
+      <ol class="timeline">
+        <li class="tl food"><div class="time">Manhã</div><div class="ttl">Café da manhã numa padaria</div><div class="desc">Noite mal dormida e sem disposição para os passeios.</div></li>
+        <li class="tl"><div class="time">Manhã</div><div class="ttl">Farmácia</div></li>
+        <li class="tl"><div class="time">Fim da manhã</div><div class="ttl">Volta para São Paulo</div><div class="desc">Com a chuva começando, decidimos voltar mais cedo.</div></li>
+        <li class="tl"><div class="time">14:30</div><div class="ttl">Chegada em São Paulo</div></li>
+      </ol>
+    </article>
+  </div>
+
+  <div id="hosp" class="section" role="tabpanel" hidden>
+    <section class="card">
+      <h2>Condomínio Strasburgo</h2>
+      <dl class="kv">
+        <dt>Endereço</dt><dd>Av. Vitor Godinho, 333, Vila Capivari<br><span class="desc">Mesma rua da portaria do Hotel Sagres</span></dd>
+        <dt>Apartamento</dt><dd>25, segundo andar (escada ou elevador)</dd>
+        <dt>Campainha</dt><dd>No segundo portão</dd>
+        <dt>Quem recebe</dt><dd>Zelador Sr. Roberto</dd>
+        <dt>Check-in</dt><dd>Sexta, liberado a partir das 12h</dd>
+        <dt>Check-out</dt><dd>Domingo, até as 11h</dd>
+        <dt>Carro</dt><dd>1 vaga no condomínio</dd>
+        <dt>Wi-Fi</dt><dd>Rede <b>HUGO</b> · senha <b id="wifi">hugo1234</b><button class="copy" data-copy="hugo1234">Copiar</button></dd>
+        <dt>Anfitrião</dt><dd>Hugo Shiromoto · <span id="tel">(12) 99111-0081</span><button class="copy" data-copy="12991110081">Copiar</button></dd>
+        <dt>Regras</dt><dd>Máximo 4 pessoas, sem visitantes, sem pets</dd>
+      </dl>
+    </section>
+  </div>
+
+  <div id="dicas" class="section" role="tabpanel" hidden>
+    <section class="card">
+      <h2>Dicas do anfitrião</h2>
+      <div class="tips">
+        <div><h3>Almoço</h3><p>Mercearia Campos, Maná, Panela de Ferro e Lá Galia (no Capivari); Bonanza Grill; Nonna Mimi; Dona Chica e Bonanza Parrilla (no Horto Florestal); Parque da Cerveja / Mirante de Vidro.</p></div>
+        <div><h3>Café da tarde</h3><p>Myriam Café e The Waffle King (no Capivari); Sans Souci; Alta Vista.</p></div>
+        <div><h3>Jantar</h3><p>Fondue no Krokodillo ou no Avestruz; pizza no Café Terraço ou no Arte da Pizza; Bella Vista; Pontremolli.</p></div>
+        <div><h3>Se sobrar tempo</h3><p>Fábrica de chocolate Araucária, Parque da Lagoinha, Prana Park, Vinícola Santa Maria, OLIQ (azeite), Museu Felícia Leirner.</p></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="atr" class="section" role="tabpanel" hidden>
+    <p class="intro">Opções para trocar o roteiro na hora. Horários podem mudar; confirme antes de ir.</p>
+    <section class="card">
+      <h2>🌧 Cobertos, bons para chuva</h2>
+      <ul class="attrs">
+        <li><span class="an">Vila Capivari (Centrinho)</span><span class="tag free">Grátis</span><span class="ad">Chocolaterias, cafés, lojas e decoração de Natal. Ao lado do apartamento.</span></li>
+        <li><span class="an">Cervejaria Baden Baden</span><span class="tag paid">Pago</span><span class="ad">Tour e degustação, só maiores de 18. Sex a dom, 10h–19h.</span></li>
+        <li><span class="an">Palácio Boa Vista</span><span class="tag free">Grátis</span><span class="ad">Residência do governador com acervo de arte. Qua a dom, 10h–12h e 14h–17h.</span></li>
+        <li><span class="an">Fábrica Spinassi</span><span class="tag free">Grátis</span><span class="ad">Visita à fábrica com degustação. Domingo só até 14h.</span></li>
+        <li><span class="an">Fábrica Araucária</span><span class="tag free">Grátis</span><span class="ad">Produção vista por vidro e loja.</span></li>
+        <li><span class="an">Casa do Papai Noel e árvore de Natal</span><span class="tag free">Grátis</span><span class="ad">Decoração de Natal no Capivari.</span></li>
+        <li><span class="an">Bondinho (trem)</span><span class="tag paid">Pago</span><span class="ad">Passeio de cerca de 50 min pela cidade, 10h–17h.</span></li>
+        <li><span class="an">Casa da Xilogravura</span><span class="tag paid">Pago</span><span class="ad">Museu de gravuras, perto do Capivari.</span></li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>☀️ Ao ar livre</h2>
+      <ul class="attrs">
+        <li><span class="an">Pico do Itapeva</span><span class="tag free">Grátis</span><span class="ad">Mirante a mais de 2.000 m. Melhor cedo, com céu limpo.</span></li>
+        <li><span class="an">Morro do Elefante</span><span class="tag paid">Teleférico pago</span><span class="ad">Mirante com teleférico saindo do Parque Capivari. Pode fechar com chuva.</span></li>
+        <li><span class="an">Parque Capivari</span><span class="tag free">Entrada grátis</span><span class="ad">Roda-gigante, pedalinhos e trenó (pagos à parte). Até 21h–22h.</span></li>
+        <li><span class="an">Parque Amantikir</span><span class="tag paid">Pago</span><span class="ad">Mais de 25 jardins temáticos. Cerca de 2h.</span></li>
+        <li><span class="an">Ducha de Prata</span><span class="tag free">Grátis</span><span class="ad">Quedas d'água e pontes de madeira. Seg e qua a sáb, 9h–16h.</span></li>
+        <li><span class="an">Parque Tarundu</span><span class="tag paid">Pago</span><span class="ad">Tirolesa, boia-cross e cavalo, com algumas atividades cobertas. 9h–17h.</span></li>
+        <li><span class="an">Horto Florestal</span><span class="tag paid">Pago</span><span class="ad">Trilhas, arvorismo e pedalinho. Restaurantes Dona Chica e Bonanza Parrilla lá dentro.</span></li>
+        <li><span class="an">Museu Felícia Leirner</span><span class="tag paid">Pago</span><span class="ad">Esculturas ao ar livre com vista para a Pedra do Baú. Perto do Palácio.</span></li>
+        <li><span class="an">Parque da Cerveja / Mirante de Vidro</span><span class="tag paid">Pago</span><span class="ad">Mirante e cervejaria, bom para almoço.</span></li>
+        <li><span class="an">Parque da Lagoinha</span><span class="tag paid">Pago</span><span class="ad">Lago e área verde, indicado para a manhã.</span></li>
+        <li><span class="an">Prana Park</span><span class="tag paid">Pago</span><span class="ad">Parque com mirante e pôr do sol com vista para a Pedra do Baú.</span></li>
+        <li><span class="an">Vinícola Santa Maria</span><span class="tag paid">Pago</span><span class="ad">Visita e degustação de vinhos.</span></li>
+        <li><span class="an">Pedra do Baú</span><span class="tag free">Grátis</span><span class="ad">Mirante e trilhas em São Bento do Sapucaí. Bate-volta de carro.</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <div id="fotos" class="section" role="tabpanel" hidden>
+    <div class="gal-head"><p class="intro" id="gal-total"></p></div>
+    <div id="gal-root" class="section"></div>
+  </div>
+
+  <p class="foot">Previsão consultada em 05/11. Horários são estimativas; confirme funcionamento de cada atração.</p>
 </div>
-<div id="roteiro" class="section" role="tabpanel">
-<article class="day">
-<div class="day-head">
-<div class="badge">Sex<b>D1</b></div>
-<div class="day-title">
-<div class="date">Sexta · 06/11</div>
-<div class="name">Chegada, Ducha, Itapeva e Capivari ✅</div>
-<div class="wx"><span>🌦</span><span class="t">18° a 25°</span><span class="pill rain">60% chuva</span></div>
+
+<div class="lb" id="lb" hidden>
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Fechar">✕</button>
+  <button class="lb-btn nav lb-prev" id="lb-prev" aria-label="Anterior">‹</button>
+  <div class="lb-stage" id="lb-stage"><img id="lb-img" alt=""><div class="lb-count" id="lb-count"></div></div>
+  <button class="lb-btn nav lb-next" id="lb-next" aria-label="Próxima">›</button>
 </div>
-</div>
-<ol class="timeline">
-<li class="tl"><div class="time">Manhã</div><div class="ttl">Chegada e Ducha de Prata</div><div class="desc">Trilhas, pontes de madeira e quedas d'água.</div></li>
-<li class="tl"><div class="time">Manhã</div><div class="ttl">Pico do Itapeva</div><div class="desc">Vista a mais de 2.000 m.</div></li>
-<li class="tl food"><div class="time">Almoço</div><div class="ttl">Check-in e almoço no SP50</div><div class="desc">No centrinho do Capivari.</div></li>
-<li class="tl"><div class="time">Tarde</div><div class="ttl">Parque Capivari</div><div class="desc">Trenó e teleférico fechados por risco de raios na região.</div></li>
-<li class="tl"><div class="time">Noite</div><div class="ttl">Festival de luzes no Parque Capivari</div><div class="desc">Passeio pela Vila e comprinhas.</div></li>
-<li class="tl food"><div class="time">Jantar</div><div class="ttl">Cantinho da Serra</div><div class="desc">Na Vila Capivari. Depois, passada de carro na farmácia.</div></li>
-</ol>
-<div class="tip"><strong>Ficou pendente:</strong> teleférico e trenó foram para sábado de manhã.</div>
-</article>
-<article class="day">
-<div class="day-head">
-<div class="badge">Sáb<b>D2</b></div>
-<div class="day-title">
-<div class="date">Sábado · 07/11</div>
-<div class="name">Dia coberto e Natal no Capivari</div>
-<div class="wx"><span>🌧</span><span class="t">16° a 26°</span><span class="pill rain">75% chuva</span></div>
-</div>
-</div>
-<ol class="timeline">
-<li class="tl food"><div class="time">09:30</div><div class="ttl">Café da manhã sem pressa</div></li>
-<li class="tl"><div class="time">10:15</div><div class="ttl">Teleférico até o Morro do Elefante, descida de trenó</div><div class="desc">Saindo do Parque Capivari. Pode fechar com chuva ou raios; se estiver fechado, adiante as lojinhas.</div></li>
-<li class="tl food"><div class="time">12:00</div><div class="ttl">Almoço nas lojinhas do Parque Capivari</div></li>
-<li class="tl"><div class="time">14:00</div><div class="ttl">Cervejaria Baden Baden ✅</div><div class="desc">Tour Degustação, 3 ingressos comprados. Av. Matheus da Costa Pinto, 1653. Chegue às 13h45: não entra depois do horário. Leve os ingressos impressos e documento com foto.</div></li>
-<li class="tl"><div class="time">15:30</div><div class="ttl">Vila Capivari por dentro</div><div class="desc">Chocolaterias, cafés e lojinhas de artesanato.</div></li><li class="tl tbc"><div class="time">17:00 · talvez</div><div class="ttl">Casa do Papai Noel e árvore de 20 m</div><div class="desc">Decoração de Natal no Capivari, tema "Fábrica de Biscoitos".</div></li>
-<li class="tl food"><div class="time">19:30</div><div class="ttl">Rodízio de fondue no Krokodillo</div><div class="desc">Plano provável.</div></li>
-</ol>
-<div class="tip"><strong>Reserve:</strong> o jantar de sábado à noite lota.</div>
-</article>
-<article class="day">
-<div class="day-head">
-<div class="badge">Dom<b>D3</b></div>
-<div class="day-title">
-<div class="date">Domingo · 08/11</div>
-<div class="name">Jardins, Palácio e volta</div>
-<div class="wx"><span>🧥</span><span class="t">10° a 15°</span><span class="pill cold">30% chuva · frio</span></div>
-</div>
-</div>
-<ol class="timeline">
-<li class="tl"><div class="time">09:00</div><div class="ttl">Check-out</div><div class="desc">Até as 11h. Saia já com as malas no carro.</div></li>
-<li class="tl"><div class="time">09:30</div><div class="ttl">Parque Amantikir</div><div class="desc">Mais de 25 jardins temáticos. Cerca de 2h30.</div></li>
-<li class="tl food"><div class="time">12:45</div><div class="ttl">Almoço</div></li>
-<li class="tl"><div class="time">14:00</div><div class="ttl">Centrinho e lembrancinhas</div><div class="desc">Chocolate, malhas e artesanato, com a decoração de Natal.</div></li>
-<li class="tl"><div class="time">15:00</div><div class="ttl">Palácio Boa Vista</div><div class="desc">Visita guiada gratuita até 17h, com senhas. Bolsas e celulares ficam no guarda-volumes.</div></li>
-<li class="tl food"><div class="time">19:30</div><div class="ttl">Jantar e volta para casa</div><div class="desc">Saia depois das 20h para pegar menos trânsito.</div></li>
-</ol>
-<div class="tip"><strong>Plano B se chover:</strong> troque o Amantikir por mais tempo no Centrinho e nos cafés. O Palácio pode suspender visitas com chuva.</div>
-</article>
-</div>
-<div id="hosp" class="section" role="tabpanel" hidden>
-<section class="card">
-<h2>Condomínio Strasburgo</h2>
-<dl class="kv">
-<dt>Endereço</dt><dd>Av. Vitor Godinho, 333, Vila Capivari<br><span class="desc">Mesma rua da portaria do Hotel Sagres</span></dd>
-<dt>Apartamento</dt><dd>25, segundo andar (escada ou elevador)</dd>
-<dt>Campainha</dt><dd>No segundo portão</dd>
-<dt>Quem recebe</dt><dd>Zelador Sr. Roberto</dd>
-<dt>Check-in</dt><dd>Sexta, liberado a partir das 12h</dd>
-<dt>Check-out</dt><dd>Domingo, até as 11h</dd>
-<dt>Carro</dt><dd>1 vaga no condomínio</dd>
-<dt>Wi-Fi</dt><dd>Rede <b>HUGO</b> · senha <b id="wifi">hugo1234</b><button class="copy" data-copy="hugo1234">Copiar</button></dd>
-<dt>Anfitrião</dt><dd>Hugo Shiromoto · <span id="tel">(12) 99111-0081</span><button class="copy" data-copy="12991110081">Copiar</button></dd>
-<dt>Regras</dt><dd>Máximo 4 pessoas, sem visitantes, sem pets</dd>
-</dl>
-</section>
-</div>
-<div id="dicas" class="section" role="tabpanel" hidden>
-<section class="card">
-<h2>Dicas do anfitrião</h2>
-<div class="tips">
-<div><h3>Almoço</h3><p>Mercearia Campos, Maná, Panela de Ferro e Lá Galia (no Capivari); Bonanza Grill; Nonna Mimi; Dona Chica e Bonanza Parrilla (no Horto Florestal); Parque da Cerveja / Mirante de Vidro.</p></div><div><h3>Café da tarde</h3><p>Myriam Café e The Waffle King (no Capivari); Sans Souci; Alta Vista.</p></div>
-<div><h3>Jantar</h3><p>Fondue no Krokodillo ou no Avestruz; pizza no Café Terraço ou no Arte da Pizza; Bella Vista; Pontremolli.</p></div>
-<div><h3>Se sobrar tempo</h3><p>Fábrica de chocolate Araucária, Parque da Lagoinha, Prana Park, Vinícola Santa Maria, OLIQ (azeite), Museu Felícia Leirner.</p></div>
-</div>
-</section>
-</div>
-<div id="atr" class="section" role="tabpanel" hidden>
-<p class="intro">Opções para trocar o roteiro na hora. Horários podem mudar; confirme antes de ir.</p>
-<section class="card">
-<h2>🌧 Cobertos, bons para chuva</h2>
-<ul class="attrs">
-<li><span class="an">Vila Capivari (Centrinho)</span><span class="tag free">Grátis</span><span class="ad">Chocolaterias, cafés, lojas e decoração de Natal. Ao lado do apartamento.</span></li>
-<li><span class="an">Cervejaria Baden Baden</span><span class="tag paid">Pago</span><span class="ad">Tour e degustação, só maiores de 18. Sex a dom, 10h–19h.</span></li>
-<li><span class="an">Palácio Boa Vista</span><span class="tag free">Grátis</span><span class="ad">Residência do governador com acervo de arte. Qua a dom, 10h–12h e 14h–17h.</span></li>
-<li><span class="an">Fábrica Spinassi</span><span class="tag free">Grátis</span><span class="ad">Visita à fábrica com degustação. Domingo só até 14h.</span></li>
-<li><span class="an">Fábrica Araucária</span><span class="tag free">Grátis</span><span class="ad">Produção vista por vidro e loja.</span></li>
-<li><span class="an">Casa do Papai Noel e árvore de Natal</span><span class="tag free">Grátis</span><span class="ad">Decoração de Natal no Capivari.</span></li>
-<li><span class="an">Bondinho (trem)</span><span class="tag paid">Pago</span><span class="ad">Passeio de cerca de 50 min pela cidade, 10h–17h.</span></li>
-<li><span class="an">Casa da Xilogravura</span><span class="tag paid">Pago</span><span class="ad">Museu de gravuras, perto do Capivari.</span></li>
-</ul>
-</section>
-<section class="card">
-<h2>☀️ Ao ar livre</h2>
-<ul class="attrs">
-<li><span class="an">Pico do Itapeva</span><span class="tag free">Grátis</span><span class="ad">Mirante a mais de 2.000 m. Melhor cedo, com céu limpo.</span></li>
-<li><span class="an">Morro do Elefante</span><span class="tag paid">Teleférico pago</span><span class="ad">Mirante com teleférico saindo do Parque Capivari. Pode fechar com chuva.</span></li>
-<li><span class="an">Parque Capivari</span><span class="tag free">Entrada grátis</span><span class="ad">Roda-gigante, pedalinhos e trenó (pagos à parte). Até 21h–22h.</span></li>
-<li><span class="an">Parque Amantikir</span><span class="tag paid">Pago</span><span class="ad">Mais de 25 jardins temáticos. Cerca de 2h.</span></li>
-<li><span class="an">Ducha de Prata</span><span class="tag free">Grátis</span><span class="ad">Quedas d'água e pontes de madeira. Seg e qua a sáb, 9h–16h.</span></li>
-<li><span class="an">Parque Tarundu</span><span class="tag paid">Pago</span><span class="ad">Tirolesa, boia-cross e cavalo, com algumas atividades cobertas. 9h–17h.</span></li><li><span class="an">Horto Florestal</span><span class="tag paid">Pago</span><span class="ad">Trilhas, arvorismo e pedalinho. Restaurantes Dona Chica e Bonanza Parrilla lá dentro.</span></li>
-<li><span class="an">Museu Felícia Leirner</span><span class="tag paid">Pago</span><span class="ad">Esculturas ao ar livre com vista para a Pedra do Baú. Perto do Palácio.</span></li>
-<li><span class="an">Parque da Cerveja / Mirante de Vidro</span><span class="tag paid">Pago</span><span class="ad">Mirante e cervejaria, bom para almoço.</span></li>
-<li><span class="an">Parque da Lagoinha</span><span class="tag paid">Pago</span><span class="ad">Lago e área verde, indicado para a manhã.</span></li>
-<li><span class="an">Prana Park</span><span class="tag paid">Pago</span><span class="ad">Parque com mirante e pôr do sol com vista para a Pedra do Baú.</span></li>
-<li><span class="an">Vinícola Santa Maria</span><span class="tag paid">Pago</span><span class="ad">Visita e degustação de vinhos.</span></li>
-<li><span class="an">Pedra do Baú</span><span class="tag free">Grátis</span><span class="ad">Mirante e trilhas em São Bento do Sapucaí. Bate-volta de carro.</span></li>
-</ul>
-</section>
-</div>
-<p class="foot">Previsão consultada em 05/11. Horários são estimativas; confirme funcionamento de cada atração.</p>
-</div>
+
 <script>
 const tabs=[...document.querySelectorAll('.tab')];
 function show(id){tabs.forEach(t=>{const on=t.dataset.tab===id;t.setAttribute('aria-selected',on);document.getElementById(t.dataset.tab).hidden=!on});
-try{localStorage.setItem('cj-tab',id)}catch(e){}}
+  try{localStorage.setItem('cj-tab',id)}catch(e){}}
 tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
 try{const s=localStorage.getItem('cj-tab');if(s&&document.getElementById(s))show(s)}catch(e){}
+document.querySelectorAll('.checks input').forEach(cb=>{
+  try{cb.checked=localStorage.getItem('cj-'+cb.id)==='1'}catch(e){}
+  cb.addEventListener('change',()=>{try{localStorage.setItem('cj-'+cb.id,cb.checked?'1':'0')}catch(e){}});
+});
 document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{
-const txt=b.dataset.copy;
-const done=()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar',1500)};
-if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done).catch(()=>{})}
+  const txt=b.dataset.copy;
+  const done=()=>{b.textContent='Copiado';setTimeout(()=>b.textContent='Copiar',1500)};
+  if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done).catch(()=>{const r=document.createRange();r.selectNodeContents(b.previousElementSibling);getSelection().removeAllRanges();getSelection().addRange(r)})}
 }));
+
+// Fotos e vídeos do Google Drive (pasta "Campos do Jordão", uma subpasta por dia)
+const PHOTOS={"d1":[["12Rl0OM1k7LFD5N8fLr2Fp-Y9uOD9dnYN",0],["1vZaBzjZq8K1r1UbLxshOOZ7R_xGaRY12",0],["18FlfLKanvzv7_2U1Bp9IfRDBdb_vzPA1",0],["1NZ3AXjCNUc0cN-yN32mCAQ8aV4XyjGmN",0],["1bierFF-L54Z7i7yitAQxENSLCmoTsltU",0],["1rj8qfA_CkCFsei615_4KlbW7Mm-CHfyY",0],["1w4bZo_FrdQZ6tBaYLdNsVW2BTBJf-Xd9",0],["1_E_A5tQ0GReTq0JkgppJb4PPI_TvzZUm",0],["1YHcNN7ZpOyIQtZF_UGUX73rm1G3Aeh2a",0],["11eerHEj6OUr-C-3KEs1R_2wIOSebxwP1",0],["1a4PFfx7Y7mBvPyCZDTqDKz878Znt4U6-",0],["1pz2qKCt8i2qd3xvsT0HOWgzsvuh69hF6",1],["1GgVYttTEQx0iT1TNFNIn-hChOfZ-HxZx",0],["1yyXjcLeffktTROOU4JT1Gg3fXfk8cnPI",0],["16EpYoETnEsfVTdUKHfADbRJ1ztc6NYCu",0],["1qitnZOqIp7bD-rapn-27tDaCG_MZMFje",1],["1Vh4l0EUQxvMA1NeV6Cbh1zRg_b4bHw-d",0],["17ADid98lsxbpZH89b0ggOPY4aCRZZfn7",0],["1puIUhvkIQbgw8s0c-vC-do6uvcIUKHzs",0],["1z8uJ--IMt5MMrbhADyN5y_r6aohNTFiU",0],["1zEutD8_mgCu8dd2BWsGSPcPdcWzqVZ0f",0],["19m-wAHo5GFdvLgbFVc8I_xAyi-yZ0E9c",0],["1f6HTgLMTl3wj6tJuEaGept0E7jHbFuSx",0],["1ELlOZz0Z5G7ol6b8Ec4FkCUFUn25A5US",0],["1biJBq0m18gXhS_3v8hcBenflcCAK3b3j",0],["1mpF77-QcziKGJyWu8gQlcGnhrOHenCBo",0],["1Ctsutv58Kmcn8Sxoze9B77Ht5SqGLghm",0],["14hvgfzk01cyBC9djLUtWiWU4NJ6fu85r",0],["19F4hIyF2aCYmeX89rAeE--9GI2aHjQtR",0],["1p-BSfMMhJVftKGV2VJyka-2RSxbQuXUT",0],["1hpTGpKqWCZteiNXKKTBrwAsDdkW-nwqa",0],["1fAwMEhenkCC6KUBca7Z07acLrP2Iv4je",0],["1vzr1sdbFlWQe1zWE9RL58INB11M0BxZp",0],["1YqnUMtks2q4VQH3QlVwKtBwou_6AliAV",0],["1PcKJ8JjMYXbRzWswUExIAs7W6NGPfn1d",0],["1LoqenLdLhYuRy29ZjzmQ-nJxwStcSe8I",0],["1x47sU6DMW0NNU6DbXohagZn6yjQlWOGA",0],["1zgLFh4osWEJe_bdNeOJaaB61GGgGNfdJ",0],["1EFwnW8voeaxw0N6dZlTa2iyhAy1VXW3w",0],["17BS98iDVQMnEdts_wsTA0KIVEtoaxnBH",0],["1TkxqcDaOcIeHPbjvTK6ZAtdnfIZTuegL",0],["1gn_wA_FmHqYMdrpqiUJDS2OKNJ5xbi4m",0],["1GbfkO1qrtwDuyNNBljqlPmKAOV3ju7Ef",0],["1k3VOWMAJhPMx47553bvjXRFg_WWeF07K",0],["1JME18gFsFUDytzd0ug9IhIs4YLpr7xLA",0],["1SPr2C2ucn6yGJHAIWsjuLIuA9lBCgTLX",0],["1aHnNE-TkhOkEGXfwHUnY_KVqYvmyiENi",0],["1ThQZD9Tx2UXv7NjoBxIvYpMMm4HJrwqd",0],["12ULoQPzIKS7Gvy-yhPJJ4oMaXjZ9Gj9J",0],["1oOqNM2U6BNuUc8iiM5Kl5MgD27hl41h5",0],["1M2IqrqoIx7OKtA9jvZtIXVnnDKcXrXur",0],["1vvxs9C-56ryMkGx6m5SYVv_c1GkEAJTk",0],["1-lD_PYwY2kCU5oziLGFK5ob4VlRVodjz",0],["1hZLXNuUR7xacY5Y0IuQ94kK7sq_ArlWW",0],["1ZU3Fj2BvnFgBRXtkFRJ-Dv5CcBTpaN5s",0],["1TsWNSrrHQ1ma7VZacSfwFotl5ditljVu",0],["1n9r9d-Ptjux9b0lp9CN7G3Wv7FYzCAQN",0],["1d-X6oso-3vwWiFK6Uyi_iYw_AJcHiD7i",0],["1sxIajTNE-AKsXM8WhUNEEWXQOuEh0rC8",0],["17U9NcTx7QbWva7KJVw_bP4tqpxDhklQZ",0],["1RlGXzEZw3AIsY3sv0CxPVsNBhI2dH8d4",0],["1v70ZiG5HK_keqbY8bG5AWA7T7dbV4YHS",0],["1VlA6k8E3ypY5jSRkAoOthpp9Z_ciTHQp",0],["116BWf6kVKYdkfYNOv2Nb33RezOamh1FC",0],["1qmexU4f0pKvdqDJGbOHLDiqtQfN2rEhB",0],["15ofgvJM1RzSCt6TNxUX_NnhJp8I5g1sL",0],["1ja1IDbSPzNSQmMggk5eDlWHomW8WSI7B",0],["1CtrKbQ7EHphN0K6yRpnqCtU1odiLZB_e",0],["1o7MosngpA4vXd1NhwxkC984Xny7MxNDu",0],["1YfY9zFK2cwxVwRLLwTbV7OsMmrCSE3-5",0],["1pKJPfCfmBX2SPI3gytdSYI0lFOA9NjHF",0],["1uMEj2Ob7ROxH6v-DnfOuVH2p-nz-VieQ",0],["13LoWhPRtZfbRLOfNMA16uvAaaJPVi8hm",0],["1QkQw6cNcSipWoRbSIUPUIgQXsng4AyVo",0],["1uAXJUbnL-SqAqnIuh1ElfDr5Nl41Q2dy",0],["1cclTvwiBlRpTgVH2VPs1DFUcZh7xoGRn",0],["1nD7AUe9NwldBHTl2FV7xOtFB2KWSFu01",0],["1QkGxUhNp4iDaDXvIsBA8WHepubp2NY1l",0],["13DjhcI4wsDu1xrHKws1wNC0qjg10s69m",0],["1qfFHtOr6389BQnS1MErBNluVf0aJ6yzQ",0],["14S2G84PNeyYQHEMqoaUPseVKp03lft1l",0],["18HX7j-pKskpqge1GtyLFqi7_ocqq9TGA",0],["1ja6Ef1t0GxwfR9FQC4hvXaNh7r31s_Zk",0],["18HbCEn21cWKC7N-stc0Us0olFVR4im9O",0],["1ELARSMd100Fu99_zgksywZH3FZjQSbWv",0],["1MSAYfEBJKP-CPIvhm1rdxKxhXP5X23k1",0],["1Lkmu6VHYSsHwmGSE-jLUzHQkRm8sDyTk",0],["1Jufz9oCslN0NKBr2_2KIsFXhv1Y601wu",0],["1hTNCVi7JyfPze58HyGUQOIxbtjkacDfp",0],["1Qn4YejeVODCtALOWcy1o2LLSKcyGBR0u",0],["1rBoNJxQJgEAdCwhd5iSkVKdyn9_sM_gP",0],["1lKxFrniI5jACNzfKQhfWuIYGgxDShBsV",0],["1Q4l_k-vozr3fxdhwgAEJ4AJrvJjNcBeI",0],["1ggGf-lk4uULP-NP-aHAMagUx2CKEoN9P",0],["13gh2inPzjGiMVnyuNQIRXQ8EaveakNcc",0],["1_rS4gLyMe0bvQZTidBcpYtJGn-VyBbwu",0],["138_RbsUNHohS6Ba2AbzKyZ86CPDW8eDv",0],["1-5YMDJHfr0VsHP5bd6iLXRYL1Nmyv0s-",0],["1D6BNDa8l_OOTngc9H3vlHGTYNalhbZp2",0],["1NdLd-DJDWTzzy1BCc9Wyt96mZzmeYREd",0],["1-JZydBGL9X_cb6YlN0HwKOEhOcOh_owj",0],["1Cepj5xDNDGymbz3k6cHypq_Wjlt-48vu",0],["1se7L0usT37GgRTHp90V-Jb4pn2e0xkVm",0],["1kMAXIP-s4bUwM2W3ptiKi1URCpywKug3",0],["12KGzQITdT1YPOFJhczVECmxJ7ZtIIj1W",0],["13LgDkLARXWIKK4BtQiVl1qfRBVNIxk5z",0],["1gAp6TynYu6nzQfJowo5Bo6aIsi5TGeDo",0],["1TbX_pKAdIuPPIwx8aExQcizg7chbtxY-",1]],"d2":[["1JPYNXWk83KvEZtb6bEJZYOVgqDx3Oyid",0],["1WP36sRnp3g-ekMLHGtU2VZ9l3-A7Ip86",0],["1T0EaSDF-JxvLOGw6HaYSXo4A3xDcbjWz",0],["1b_ts3tPABxEK0CYVsKKyH-pOryFNtmd6",1],["1E8Tlau0qVmR2YbCgUXjJ997bbPrssgNl",0],["1_eVHl-8SR9c7CSZianMRptNb-z4S2FdY",0],["1eUUXv3ki6LErdFJseMWc_iYsO58l_kF_",0],["1Fzo_xsNQ5SBi0D8P77Py5qwzFFKlxZfy",0],["1_8wWpN0XIA-35DzkYIom5YC_6eu7UzQG",0],["13KVq4CXarmmNV6X50aUDJ6D2-UtsR8S1",0],["1anwE14SyBUVJLXmESxXIAHAv1CiUg_gu",0],["1uIoPFmysHXlWMOej4lb9jslNPXa7k21W",0],["1CG9TOA2HfECnl2OJwFKcCvwDSHr3tswG",0],["1hebHW9ef4IXz5vuwNLrEner6yaaJuNgs",0],["1jFnh7gM_QV2qaZZTfAR0RxFIj0mAhmvN",0],["13Cy3HOOBGUu05cxJWMg3fhSAtQ-Gspb4",0],["1xS5miBKqQvqZy3h2gZbzUhihuLH8_csR",0],["1Au6jUswc-w6MVNmAQL7_vI_ru4yoN_mn",0],["1KWLoNqU34HMCtegG_3rTCpy4bomuyP0a",0],["1ycR8k5hH2jGmWJsM4e7Dr0p_0UXrTd4I",0],["1xZi5jbFt_5dLBUxHZuTyHmAW3dWEkzzZ",0],["1LZzl3SmehRHv38qXazyta992eUEI6cYi",0],["1yiZbRRU-Kheh5p1MiaAGHMh6Cgil2G4a",0],["1H6Wz8ZuEXNvJ93xYrW9KFIKdhUAT8JnO",0],["1QJcN8Jpquz2rtlGW1eAm-RARbVoLyBEy",0],["1PKCLgsucgCv5TvNCcAA-3lgEQY0brMZo",0],["1YCM10nXgWTDRCDDxkhl39OY4tijsPVck",0],["1ry6Kw0Jz6DKp9xeDGaTwUVmR0SB4a58_",0],["1dc993k8GiitUS5qkQzE1zUgX5nezGqII",0],["1T48LeMF7vblaS20VispeLfn8hHxjpNgG",0],["1TSPkjzCgkUbFNgnZ5NR0kyUdF_9tEF_P",0],["11VvzgCxz55qe-UhGebP9WImMhqnZsmyl",0],["1QwLn34sFsrpteWKtSmECf_A1Bl-3VCAa",0],["1FYPy1mdMJapzUuI46ZA5caz9EX0_OFU9",0],["1nMQz4pHVyS5Fd6N-6YPoqs4S4mpqB3g3",0],["16C00ekoL_OVd57fp8sL7qZci8aJPa-Pb",0],["1Jp0qD7CGI5KADFUYncFoOIBUhoWcjIBC",0],["1lU14joM4o59_6fSr7d93-xZOy-PIViwK",0],["1BaFr3n0fD4ySxPLv-IaWOFySFSIbBXN4",0],["110IFzxBJ6zqS0fq1ll0F9ATRFbZC3hgv",0],["1Q7Zi9SKecB_nmjMtQDlY4vovU_R_lEIx",0],["1ypJDee2PeVTD3O5QRk-_4PTlsP8tx-3Q",0],["17iBgLcwAccCSjvPr4dyknXxK5eHYd0u8",0],["1gNA0xQ8JUT5m2u9J7Tsgukf2OqYmerL0",0],["1jN1_UpgQ9gXYjrRk1pbqJkSJdrph_g9v",0],["10qZFheMPCqCZeq_gsGM54PpxGEJlGDUs",0],["1r8u1zxTQaR4q5HyuoIvRiBiO0s2WVj3K",0],["1dEJ_Gy9KE__nHIesrXZ1qdbdR18hLrgt",0],["1nBEPBcASq24x8PKQ8tX0G_3GUUQlyUYB",0],["1nAIPym9tWvlMrIQzcArMlCxePmmdoQK8",0],["1zAUyb0DkHlEaq7eNSGq02I_XF3SNj8LA",0],["1inU19gQM9YXP-DGO8nAt73mnpp3Xv7F8",0],["1yG1N2bnxwXMAgKsMemvhvz_JHCI-Y6lo",0],["1bE_Ez9GVziwh2eFxLnpZ2my86LOzfMWt",0],["1AXabUlRKsaAgfkCVNzwFtMHUDim7-8kV",0],["1WUnz8YF6pRsv2UNbe358YybzYXkFqetN",0],["1q31g8MOX-aNynsIc7apGl4SjkJK82cNf",0],["1bXYOOE5l-w23t_czmx1K52TsyPfE9B8F",1],["1fZPn0gd-ZnMSC2G12LnsAUQKM-5pSaKj",1]]};
+const GAL_DAYS=[
+  {id:'d1',date:'Sexta · 06/11',name:'Ducha, Itapeva e Capivari'},
+  {id:'d2',date:'Sábado · 07/11',name:'Morro do Elefante, Baden Baden e chocolate'}
+];
+const thumb=(id,w)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+function renderGallery(){
+  const all=Object.values(PHOTOS).flat();
+  const vids=all.filter(p=>p[1]).length;
+  document.getElementById('gal-total').textContent=`${all.length-vids} fotos e ${vids} vídeos. Toque para ampliar.`;
+  document.getElementById('gal-root').innerHTML=GAL_DAYS.map(d=>{
+    const m=PHOTOS[d.id]||[];
+    const f=m.filter(p=>!p[1]).length, v=m.length-f;
+    const count=[f?`${f} foto${f>1?'s':''}`:'',v?`${v} vídeo${v>1?'s':''}`:''].filter(Boolean).join(' · ');
+    const grid=m.length?`<div class="gal-grid">${m.map((p,i)=>`<button class="gal-thumb" data-day="${d.id}" data-i="${i}" aria-label="Abrir ${p[1]?'vídeo':'foto'} ${i+1}"><img src="${thumb(p[0],300)}" loading="lazy" alt="" onerror="this.style.opacity=.15">${p[1]?'<div class="gal-play"><span>▶</span></div>':''}</button>`).join('')}</div>`:'<p class="gal-empty">Sem fotos deste dia ainda.</p>';
+    return `<section class="card gal-day"><div><div class="date">${d.date}</div><h2>${d.name}</h2>${count?`<div class="gal-count">${count}</div>`:''}</div>${grid}</section>`;
+  }).join('');
+}
+let lbDay=null,lbIdx=0;
+const lbEl=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbStage=document.getElementById('lb-stage');
+function lbShow(){
+  const m=PHOTOS[lbDay],p=m[lbIdx];
+  const old=lbStage.querySelector('iframe'); if(old) old.remove();
+  if(p[1]){lbImg.hidden=true;const f=document.createElement('iframe');f.src=`https://drive.google.com/file/d/${p[0]}/preview`;f.allow='autoplay';lbStage.insertBefore(f,lbImg);}
+  else{lbImg.hidden=false;lbImg.src=thumb(p[0],1600);}
+  document.getElementById('lb-count').textContent=`${lbIdx+1} / ${m.length}`;
+}
+function lbOpen(day,i){lbDay=day;lbIdx=i;lbEl.hidden=false;lbShow();}
+function lbClose(){lbEl.hidden=true;const f=lbStage.querySelector('iframe');if(f)f.remove();lbImg.src='';}
+function lbNav(d){const n=PHOTOS[lbDay].length;lbIdx=(lbIdx+d+n)%n;lbShow();}
+document.getElementById('gal-root').addEventListener('click',e=>{const b=e.target.closest('.gal-thumb');if(b)lbOpen(b.dataset.day,+b.dataset.i);});
+document.getElementById('lb-close').onclick=lbClose;
+document.getElementById('lb-prev').onclick=()=>lbNav(-1);
+document.getElementById('lb-next').onclick=()=>lbNav(1);
+lbEl.addEventListener('click',e=>{if(e.target===lbEl)lbClose();});
+document.addEventListener('keydown',e=>{if(lbEl.hidden)return;if(e.key==='Escape')lbClose();else if(e.key==='ArrowLeft')lbNav(-1);else if(e.key==='ArrowRight')lbNav(1);});
+let tx=null;lbEl.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+lbEl.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)lbNav(dx<0?1:-1);tx=null;});
+renderGallery();
 </script>
+
 </body>
 </html>
